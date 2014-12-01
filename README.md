@@ -2,8 +2,8 @@ Barman side
 ======
 A web application developped with [AngularJS](https://angularjs.org/)
 
-## Installation
-
+ Installation
+======
     1. Clone the repository with <git clone https://github.com/LazyWaiter/Barman.git>
     2.
         - Install [NodeJS](http://nodejs.org/)
