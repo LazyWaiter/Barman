@@ -16,6 +16,12 @@ Clone the repository with :
 $ git clone https://github.com/LazyWaiter/Barman.git
 ```
 
+Add Dependencies:
+```sh
+$ bower install bootstrap
+$ bower install angular-bootstrap
+```
+
 Run
 ```sh
 $ npm install
