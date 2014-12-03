@@ -5,8 +5,8 @@ A web application developped with [AngularJS](https://angularjs.org/)
 Requirements
 ------------
 
-    Install [NodeJS](http://nodejs.org/)
-    Install [NPM](http://nodejs.org/) (Node Packaged Modules)
+* Install [NodeJS](http://nodejs.org/)
+* Install [NPM](http://nodejs.org/) (Node Packaged Modules)
 
 Installation
 ------------
