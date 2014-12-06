@@ -1,5 +1,5 @@
 <accordion close-others="oneAtATime">
-    <accordion-group heading="Table #1 - {{order.time | date:'dd/MM/yyyy'}}" ng-repeat="order in orders">
+    <accordion-group heading="Table #{{order.value.tableNumber}} - {{order.value.createdAt | date:'dd/MM/yyyy'}}" ng-repeat="order in orders | filter:isToPrepare">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -11,16 +11,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="product in order.detail">
+                <tr ng-repeat="product in order.value.products">
                     <td><input type="checkbox"></td>
                     <td>{{product.name}}</td>
                     <td>{{product.quantity}}</td>
-                    <td>product's price</td>
-                    <td>Total price</td>
+                    <td>{{product.price}}$</td>
+                    <td>{{product.price * product.quantity}}$</td>
                 </tr>
             </tbody>
         </table>
 
-        <button class="btn btn-primary" ng-click="updateStatusToReady(order)">Ready!</button>
+        <button class="btn btn-primary" ng-click="updateStatusToReady(order)">Ready</button>
     </accordion-group>
 </accordion>

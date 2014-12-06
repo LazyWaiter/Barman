@@ -2,8 +2,14 @@
 
 /* App Module */
 
-var barmanApp = angular.module('barmanApp', ['ngRoute','barmanControllers', 'ui.bootstrap']);
+var barmanApp = angular.module('barmanApp', [
+    'ngRoute',
+    'barmanControllers',
+    //'barmanServices',
+    'ui.bootstrap'
+]);
 
+/* Routes configuration */
 barmanApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
