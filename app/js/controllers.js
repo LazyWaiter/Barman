@@ -6,7 +6,7 @@ var barmanControllers = angular.module('barmanControllers', []);
 
 /* Command List Controller */
 
-barmanControllers.controller('CommandListController', ['$scope', '$http', function($scope, $http) {
+barmanControllers.controller('CommandListController', ['$scope', '$http', '$interval', function($scope, $http, $interval) {
     $scope.orders = [];
 
     /*
@@ -24,10 +24,12 @@ barmanControllers.controller('CommandListController', ['$scope', '$http', functi
      *
      * @param order: The order which want to update the status
      */
-    $scope.updateStatusToReady = function(order) {
+    $scope.updateStatusToReady = function(object) {
+        var order = object.value;
+        order.status = "to_delivery";
         var index = $scope.orders.indexOf(order);
 
-        var promise = $http.put('https://lazywaiter.couchappy.com/orders/' + order.value._id, {"status": "to_delivery"});
+        var promise = $http.put('https://lazywaiter.couchappy.com/orders/' + order._id, order);
         promise.success(function(data, status, headers, config) {
             alert("state changed");
             if (index !== -1) {
@@ -36,6 +38,7 @@ barmanControllers.controller('CommandListController', ['$scope', '$http', functi
         });
 
         promise.error(function(data, status, headers, config) {
+            order.status = "to_prepare";
             alert("error: Data not updated");
         });
     };
@@ -56,4 +59,13 @@ barmanControllers.controller('CommandListController', ['$scope', '$http', functi
     };
 
     getData();
+
+    /*
+     * Refresh data every 5 seconds
+     *
+     */
+    $interval(function() {
+        getData();
+    }, 60000);
+
 }]);

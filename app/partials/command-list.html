@@ -1,5 +1,5 @@
 <accordion close-others="oneAtATime">
-    <accordion-group heading="Table #{{order.value.tableNumber}} - {{order.value.createdAt | date:'dd/MM/yyyy'}}" ng-repeat="order in orders | filter:isToPrepare">
+    <accordion-group  ng-repeat="order in orders | filter:isToPrepare" heading="Table #{{order.value.tableNumber}} - {{order.value.createdAt | date:'dd/MM/yyyy'}}">
         <table class="table table-striped">
             <thead>
                 <tr>
