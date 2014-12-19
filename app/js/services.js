@@ -2,34 +2,45 @@
 
 /* Services */
 
-var barmanServices = angular.module('barmanServices', ['$http']);
+var barmanServices = angular.module('barmanServices', []);
 
-barmanServices.factory('Order', function ($http) {
+barmanServices.factory('Order', [ '$http', function ($http) {
     return {
         /*
          * Get the orders from couchDB
          *
          * @param array: it's where we push the data
          */
-        fetchOrders: function () {
-            return $http.get('https://lazywaiter.couchappy.com/orders/_design/orders/_view/all');
+        fetchOrders: function ($scope) {
+            var promise = $http.get('https://lazywaiter.couchappy.com/orders/_design/orders/_view/all');
+
+            promise.success(function(data, status, headers, config) {
+                $scope.orders = data.rows;
+            });
+            promise.error(function(data, status, headers, config) {
+                alert("error: Data not found");
+            });
         },
         /*
          * Update status of an order
          *
+         * @param $scope: The scope which we modify
          * @param order: The order which want to update the status
          */
-        updateOrderState: function(order) {
-            $http.put('https://lazywaiter.couchappy.com/orders/' + order.value._id, {"status": "to_delivery"});
-        },
-        /*
-         * Check if the status is 'to_prepare'
-         *
-         * @param order : the object which want to check the status
-         * @return true or false
-         */
-        isToPrepare: function(order) {
-            return order.value.status === "to_prepare" ? true : false;
+        updateOrderStatusToReady: function($scope, order) {
+            var index = $scope.orders.indexOf(order);
+            var promise = $http.put('https://lazywaiter.couchappy.com/orders/' + order._id, order);
+            promise.success(function(data, status, headers, config) {
+                alert("state changed");
+                if (index !== -1) {
+                    delete $scope.orders[index];
+                }
+            });
+
+            promise.error(function(data, status, headers, config) {
+                order.status = "to_prepare";
+                alert("error: Data not updated");
+            });
         }
     }
-}) 
+}]);

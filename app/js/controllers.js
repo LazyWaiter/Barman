@@ -6,7 +6,7 @@ var barmanControllers = angular.module('barmanControllers', []);
 
 /* Command List Controller */
 
-barmanControllers.controller('CommandListController', ['$scope', '$http', '$interval', function($scope, $http, $interval) {
+barmanControllers.controller('CommandListController', ['$scope', 'Order', '$interval', function($scope, Order, $interval) {
     $scope.orders = [];
 
     /*
@@ -27,45 +27,17 @@ barmanControllers.controller('CommandListController', ['$scope', '$http', '$inte
     $scope.updateStatusToReady = function(object) {
         var order = object.value;
         order.status = "to_delivery";
-        var index = $scope.orders.indexOf(order);
 
-        var promise = $http.put('https://lazywaiter.couchappy.com/orders/' + order._id, order);
-        promise.success(function(data, status, headers, config) {
-            alert("state changed");
-            if (index !== -1) {
-                delete $scope.orders[index];
-            }
-        });
-
-        promise.error(function(data, status, headers, config) {
-            order.status = "to_prepare";
-            alert("error: Data not updated");
-        });
+        Order.updateOrderStatusToReady($scope, order);
     };
 
-    /*
-     * Get the orders from couchDB
-     *
-     * @param array: it's where we push the data
-     */
-    var getData = function() {
-        var promise = $http({method: 'GET', url: 'https://lazywaiter.couchappy.com/orders/_design/orders/_view/all'})
-        promise.success(function(data, status, headers, config) {
-            $scope.orders = data.rows;
-        });
-        promise.error(function(data, status, headers, config) {
-            alert("error: Data not found");
-        });
-    };
-
-    getData();
+    Order.fetchOrders($scope);
 
     /*
-     * Refresh data every 5 seconds
+     * Refresh data every 60 seconds
      *
      */
     $interval(function() {
-        getData();
+        Order.fetchOrders($scope);
     }, 60000);
-
 }]);
