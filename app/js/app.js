@@ -6,7 +6,8 @@ var barmanApp = angular.module('barmanApp', [
     'ngRoute',
     'ui.bootstrap',
     'barmanControllers',
-    'barmanServices'
+    'barmanServices',
+    "barmanDirectives"
 ]);
 
 /* Routes configuration */

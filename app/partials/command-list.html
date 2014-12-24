@@ -1,5 +1,10 @@
-<accordion close-others="oneAtATime">
-    <accordion-group  ng-repeat="order in orders | filter:isToPrepare" heading="Table #{{order.value.tableNumber}} - {{order.value.createdAt | date:'dd/MM/yyyy'}}">
+<accordion close-others="oneAtATime" class="accordion-toggle">
+    <accordion-group  ng-repeat="order in orders | filter:isToPrepare">
+        <accordion-heading>
+            <div>
+                Table #{{order.value.tableNumber}} - <ordered-at counter="0"></ordered-at>
+            </div>
+        </accordion-heading>
         <table class="table table-striped">
             <thead>
                 <tr>
