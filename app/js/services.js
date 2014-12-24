@@ -5,6 +5,23 @@
 var barmanServices = angular.module('barmanServices', []);
 
 barmanServices.factory('Order', [ '$http', function ($http) {
+    /*
+     * Check if an order already exists in the scope array
+     * @param array: The scope array
+     * @param order: The order
+     *
+     * @return true or false
+     */
+    var checkIfAlreadyExist = function(array, order) {
+        for (var i = 0, l = array.length; i < l; i++) {
+            if (array[i].id === order.id) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
     return {
         /*
          * Get the orders from couchDB
@@ -17,7 +34,7 @@ barmanServices.factory('Order', [ '$http', function ($http) {
             promise.success(function(data, status, headers, config) {
                 for (var i = 0, l = data.rows.length; i < l; i++) {
                     // Push only the new entries
-                    if ($scope.orders.indexOf(data.rows[i]) === -1) {
+                    if (!checkIfAlreadyExist($scope.orders, data.rows[i])) {
                         $scope.orders.push(data.rows[i]);
                     }
                 }
