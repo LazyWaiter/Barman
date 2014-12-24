@@ -15,7 +15,12 @@ barmanServices.factory('Order', [ '$http', function ($http) {
             var promise = $http.get('https://lazywaiter.couchappy.com/orders/_design/orders/_view/all');
 
             promise.success(function(data, status, headers, config) {
-                $scope.orders = data.rows;
+                for (var i = 0, l = data.rows.length; i < l; i++) {
+                    // Push only the new entries
+                    if ($scope.orders.indexOf(data.rows[i]) === -1) {
+                        $scope.orders.push(data.rows[i]);
+                    }
+                }
             });
             promise.error(function(data, status, headers, config) {
                 alert("error: Data not found");
