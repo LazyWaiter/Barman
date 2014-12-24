@@ -22,13 +22,6 @@ Installation
 Clone the repository with :
 ```sh
 $ git clone https://github.com/LazyWaiter/Barman.git
-```
-
-Add Dependencies:
-```sh
-$ bower install bootstrap
-$ bower install angular-bootstrap
-```
 
 Run
 ```sh
