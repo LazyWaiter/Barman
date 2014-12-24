@@ -1,4 +1,4 @@
-<accordion close-others="oneAtATime" class="accordion-toggle">
+<!--<accordion close-others="oneAtATime" class="accordion-toggle">
     <accordion-group  ng-repeat="order in orders | filter:isToPrepare">
         <accordion-heading>
             <div>
@@ -28,4 +28,24 @@
 
         <button class="btn btn-primary" ng-click="updateStatusToReady(order)">Ready</button>
     </accordion-group>
-</accordion>
+</accordion>-->
+
+<div class="content" ng-class="{green: green, orange : orange, red: red}" ng-repeat="order in orders | filter:isToPrepare">
+    <div class="products">
+        <div class="inline product" ng-repeat="product in order.value.products">
+            <div class="product-name">
+                {{product.name}}
+            </div>
+            <div class=" product-quantity">
+                {{product.quantity}}
+            </div>
+        </div>
+    </div>
+    <div class="inline timer">
+        <ordered-at counter="0"></ordered-at>
+        Table #{{order.value.tableNumber}}
+    </div>
+    <button class="inline">
+        Ready<input type="checkbox" ng-model="red">
+    </button>
+</div>

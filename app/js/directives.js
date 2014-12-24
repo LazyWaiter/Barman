@@ -5,7 +5,7 @@ barmanDirectives
             restrict: 'EA',
             scope: {},
             controller: ['$scope', '$timeout', function($scope, $timeout) {
-                $scope.counter = 0;
+                $scope.counter = 1;
 
                 /*
                  * The timer
