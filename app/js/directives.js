@@ -6,10 +6,10 @@ barmanDirectives
             scope: {
                 order: "="
             },
-            controller: ['$scope', '$timeout', 'ControlTime', function($scope, $timeout, ControleTime) {
+            controller: ['$scope', '$timeout', 'ControlTime', function($scope, $timeout, ControlTime) {
 
 
-                $scope.counter = ControleTime.getOrderDateUntilNowInMinutes($scope.order);
+                $scope.counter = ControlTime.getOrderDateUntilNowInMinutes($scope.order);
                 $scope.pluralize =  ($scope.counter === 1) ? '' : 's';
 
                 /*
