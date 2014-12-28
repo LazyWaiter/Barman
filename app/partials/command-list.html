@@ -30,7 +30,7 @@
     </accordion-group>
 </accordion>-->
 
-<div class="content" ng-class="{green: green, orange : orange, red: red}" ng-repeat="order in orders | filter:isToPrepare">
+<div class="content" ng-class="checkOrderControlTimes(order)" ng-repeat="order in orders | filter:isToPrepare">
     <div class="products">
         <div class="inline product" ng-repeat="product in order.value.products">
             <div class="product-name">

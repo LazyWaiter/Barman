@@ -6,7 +6,7 @@ var barmanControllers = angular.module('barmanControllers', []);
 
 /* Command List Controller */
 
-barmanControllers.controller('CommandListController', ['$scope', 'Order', '$interval', function($scope, Order, $interval) {
+barmanControllers.controller('CommandListController', ['$scope', 'Order', 'ControlTime', '$interval', function($scope, Order, ControlTime,$interval) {
     $scope.orders = [];
 
     /*
@@ -32,6 +32,8 @@ barmanControllers.controller('CommandListController', ['$scope', 'Order', '$inte
     };
 
     Order.fetchOrders($scope);
+
+    $scope.checkOrderControlTimes = ControlTime.checkOrderControlTimes;
 
     /*
      * Refresh data every 60 seconds

@@ -68,4 +68,41 @@ barmanServices.factory('Order', [ '$http', function ($http) {
             });
         }
     }
-}])
+}]);
+
+barmanServices.factory("ControlTime", [function() {
+
+    return {
+        /*
+         * get the order's date until now in minutes
+         * @param: The order which want to get the date
+         *
+         * @return: Integer (the order's date until now)
+         */
+        getOrderDateUntilNowInMinutes: function(order) {
+            var now = new Date().getTime();
+            var orderDate = order.value.createdAt;
+            return Math.floor((now - orderDate)/ 60000)
+        },
+
+        /*
+         * Check the control times for an order
+         * @param: the order which want to check the control times
+         *
+         * @return: string (green, orange or red)
+         */
+        checkOrderControlTimes: function (order) {
+            var now = new Date().getTime();
+            var orderDate = order.value.createdAt;
+            var minutes = Math.floor((now - orderDate)/ 60000);
+            if (minutes > 10) {
+                return "red";
+            } else if (minutes <= 10 && minutes > 5) {
+                return "orange";
+            } else {
+                return "green";
+            }
+        }
+    }
+
+}]);
