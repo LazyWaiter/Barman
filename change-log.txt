@@ -1,3 +1,5 @@
 Change log
-	- Read command 
-	- Change command status 
+	- Add commande to add a new order
+	- add timer for each order
+	- order order by duration
+	- new theme
