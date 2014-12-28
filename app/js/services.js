@@ -56,7 +56,6 @@ barmanServices.factory('Order', [ '$http', function ($http) {
 
             var promise = $http.put('https://lazywaiter.couchappy.com/orders/' + order._id, order);
             promise.success(function(data, status, headers, config) {
-                alert("state changed");
                 if (index !== -1) {
                     delete $scope.orders[index];
                 }
