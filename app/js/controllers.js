@@ -4,8 +4,6 @@
 
 var barmanControllers = angular.module('barmanControllers', []);
 
-/* Command List Controller */
-
 barmanControllers.controller('CommandListController', ['$scope', 'Order', 'ControlTime', '$interval', function($scope, Order, ControlTime,$interval) {
     $scope.orders = [];
 
@@ -34,8 +32,8 @@ barmanControllers.controller('CommandListController', ['$scope', 'Order', 'Contr
     $scope.getOrderDateUntilNowInMinutes = ControlTime.getOrderDateUntilNowInMinutes;
 
     /*
-    * Function to add new order in the order scope array for test
-    *
+     * Function to add new order in the order scope array for test
+     *
      */
     $scope.addCommand = function() {
         var orderTest = {};
@@ -67,3 +65,5 @@ barmanControllers.controller('CommandListController', ['$scope', 'Order', 'Contr
         Order.fetchOrders($scope);
     }, 60000);
 }]);
+
+/* Command List Controller */
