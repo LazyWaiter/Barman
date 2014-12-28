@@ -22,10 +22,14 @@ Installation
 Clone the repository with :
 ```sh
 $ git clone https://github.com/LazyWaiter/Barman.git
+```
 
 Run
 ```sh
 $ npm install
+```
+choose number 3 for install angular-bootstrap
+```sh
 $ npm start
 ```
 
