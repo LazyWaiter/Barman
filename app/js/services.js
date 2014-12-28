@@ -34,8 +34,10 @@ barmanServices.factory('Order', [ '$http', function ($http) {
             promise.success(function(data, status, headers, config) {
                 for (var i = 0, l = data.rows.length; i < l; i++) {
                     // Push only the new entries
-                    if (!checkIfAlreadyExist($scope.orders, data.rows[i])) {
-                        $scope.orders.push(data.rows[i]);
+                    if (data.rows[i].value.status === "to_prepare") {
+                        if (!checkIfAlreadyExist($scope.orders, data.rows[i])) {
+                            $scope.orders.push(data.rows[i]);
+                        }
                     }
                 }
             });
@@ -51,6 +53,7 @@ barmanServices.factory('Order', [ '$http', function ($http) {
          */
         updateOrderStatusToReady: function($scope, order) {
             var index = $scope.orders.indexOf(order);
+
             var promise = $http.put('https://lazywaiter.couchappy.com/orders/' + order._id, order);
             promise.success(function(data, status, headers, config) {
                 alert("state changed");
@@ -65,4 +68,4 @@ barmanServices.factory('Order', [ '$http', function ($http) {
             });
         }
     }
-}]);
+}])
