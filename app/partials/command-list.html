@@ -1,42 +1,11 @@
-<!--<accordion close-others="oneAtATime" class="accordion-toggle">
-    <accordion-group  ng-repeat="order in orders | filter:isToPrepare">
-        <accordion-heading>
-            <div>
-                Table #{{order.value.tableNumber}} - <ordered-at counter="0"></ordered-at>
-            </div>
-        </accordion-heading>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Description</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Total Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="product in order.value.products">
-                    <td><input type="checkbox"></td>
-                    <td>{{product.name}}</td>
-                    <td>{{product.quantity}}</td>
-                    <td>{{product.price}}$</td>
-                    <td>{{product.price * product.quantity}}$</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <button class="btn btn-primary" ng-click="updateStatusToReady(order)">Ready</button>
-    </accordion-group>
-</accordion>-->
-
-<div class="content" ng-class="checkOrderControlTimes(order)" ng-repeat="order in orders | filter:isToPrepare">
+<button class="test" ng-click="addCommand()">Add Command test</button>
+<div class="content" ng-class="checkOrderControlTimes(order)" ng-repeat="order in orders | filter:isToPrepare | orderBy:getOrderDateUntilNowInMinutes:true">
     <div class="products">
         <div class="inline product" ng-repeat="product in order.value.products">
-            <div class="product-name">
+            <div class="product-info">
                 {{product.name}}
             </div>
-            <div class=" product-quantity">
+            <div class=" product-info">
                 {{product.quantity}}
             </div>
         </div>
@@ -46,6 +15,6 @@
         Table #{{order.value.tableNumber}}
     </div>
     <button class="inline" ng-click="updateStatusToReady(order)">
-        Ready<input type="checkbox" ng-model="red">
+        Ready
     </button>
 </div>

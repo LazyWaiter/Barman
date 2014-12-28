@@ -31,6 +31,30 @@ barmanControllers.controller('CommandListController', ['$scope', 'Order', 'Contr
         Order.updateOrderStatusToReady($scope, order);
     };
 
+    $scope.getOrderDateUntilNowInMinutes = ControlTime.getOrderDateUntilNowInMinutes;
+
+    /*
+    * Function to add new order in the order scope array for test
+    *
+     */
+    $scope.addCommand = function() {
+        var orderTest = {};
+        orderTest.value= {
+            "tableNumber" : "42", // Number of the table
+            "createdAt" : new Date().getTime(), // date creation of the command
+            "products" : [ // all product in the command
+                {
+                    "name" : "Beer", // name of the product
+                    "quantity" : "1", // quantity for the product
+                    "price" : "3" //price of the product
+                }
+            ],
+            "status" : "to_prepare" // command status
+        };
+        console.log(orderTest);
+        $scope.orders.push(orderTest);
+    };
+
     Order.fetchOrders($scope);
 
     $scope.checkOrderControlTimes = ControlTime.checkOrderControlTimes;
