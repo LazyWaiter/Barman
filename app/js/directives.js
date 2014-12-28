@@ -3,9 +3,15 @@ barmanDirectives
     .directive('orderedAt', function() {
         return {
             restrict: 'EA',
-            scope: {},
+            scope: {
+                order: "="
+            },
             controller: ['$scope', '$timeout', function($scope, $timeout) {
-                $scope.counter = 1;
+
+                var now = new Date().getTime();
+                var orderDate =$scope.order.value.createdAt;
+                $scope.counter = Math.floor((now - orderDate)/ 60000);
+                $scope.pluralize =  ($scope.counter === 1) ? '' : 's';
 
                 /*
                  * The timer
@@ -13,10 +19,10 @@ barmanDirectives
                 $scope.onTimeout = function(){
                     $scope.counter += 1;
                     $scope.pluralize =  ($scope.counter === 1) ? '' : 's';
-                    mytimeout = $timeout($scope.onTimeout, 60000);
+                    orderTimeout = $timeout($scope.onTimeout, 60000);
                 };
 
-                var mytimeout = $timeout($scope.onTimeout, 60000);
+                var orderTimeout = $timeout($scope.onTimeout, 60000);
             }],
             templateUrl: "partials/ordered-at.html"
         }

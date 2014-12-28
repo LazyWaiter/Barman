@@ -42,10 +42,10 @@
         </div>
     </div>
     <div class="inline timer">
-        <ordered-at counter="0"></ordered-at>
+        <ordered-at order="order"></ordered-at>
         Table #{{order.value.tableNumber}}
     </div>
-    <button class="inline">
+    <button class="inline" ng-click="updateStatusToReady(order)">
         Ready<input type="checkbox" ng-model="red">
     </button>
 </div>
