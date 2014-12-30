@@ -91,9 +91,7 @@ barmanServices.factory("ControlTime", [function() {
          * @return: string (green, orange or red)
          */
         checkOrderControlTimes: function (order) {
-            var now = new Date().getTime();
-            var orderDate = order.value.createdAt;
-            var minutes = Math.floor((now - orderDate)/ 60000);
+            var minutes = this.getOrderDateUntilNowInMinutes(order);
             if (minutes > 10) {
                 return "red";
             } else if (minutes <= 10 && minutes > 5) {

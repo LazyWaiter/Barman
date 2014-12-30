@@ -49,7 +49,6 @@ barmanControllers.controller('CommandListController', ['$scope', 'Order', 'Contr
             ],
             "status" : "to_prepare" // command status
         };
-        console.log(orderTest);
         $scope.orders.push(orderTest);
     };
 
