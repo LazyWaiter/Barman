@@ -1,5 +1,5 @@
-<button class="test" ng-click="addCommand()">Add Command test</button>
-<div class="content" ng-class="checkOrderControlTimes(order)" ng-repeat="order in orders | filter:isToPrepare | orderBy:getOrderDateUntilNowInMinutes:true">
+<button class="test" ng-click="orderService.insertOrder()">Add Command test</button>
+<div class="content" ng-class="controlTime.checkOrderControlTimes(order)" ng-repeat="order in orderService.orders | orderBy:controlTime.getOrderDateUntilNowInMinutes:true">
     <div class="products">
         <div class="inline product" ng-repeat="product in order.value.products">
             <div class="product-info">
@@ -14,7 +14,7 @@
         <ordered-at order="order"></ordered-at>
         Table #{{order.value.tableNumber}}
     </div>
-    <button class="inline" ng-click="updateStatusToReady(order)">
+    <button class="inline" ng-click="orderService.updateStatusToReady(order)">
         Ready
     </button>
 </div>

@@ -4,7 +4,7 @@
 
 var barmanServices = angular.module('barmanServices', []);
 
-barmanServices.factory('Order', [ '$http', function ($http) {
+barmanServices.factory('Order', [ '$http', '$interval', function ($http, $interval) {
     /*
      * Check if an order already exists in the scope array
      * @param array: The scope array
@@ -23,20 +23,48 @@ barmanServices.factory('Order', [ '$http', function ($http) {
     };
 
     return {
+        orders : [],
+        insertOrder: function() {
+            var self = this;
+            var order = {
+                value: {
+                    "tableNumber" : 88, // Number of the table
+                    "createdAt" : new Date().getTime(), // date creation of the command
+                    "products" : [ // all product in the command
+                        {
+                            "name" : "Beer", // name of the product
+                            "quantity" : "1", // quantity for the product
+                            "price" : "3" //price of the product
+                        }
+                    ],
+                    "status" : "to_prepare" // command status
+                }
+            };
+
+            var promise = $http.post('https://lazywaiter.couchappy.com/orders/', order);
+
+            promise.success(function(data, status, headers, config) {
+                self.orders.push(order);
+            });
+            promise.error(function(data, status, headers, config) {
+                alert("Error on POST Request");
+            });
+        },
         /*
          * Get the orders from couchDB
          *
          * @param array: it's where we push the data
          */
-        fetchOrders: function ($scope) {
+        fetchOrders: function () {
             var promise = $http.get('https://lazywaiter.couchappy.com/orders/_design/orders/_view/all');
+            var self = this;
 
             promise.success(function(data, status, headers, config) {
                 for (var i = 0, l = data.rows.length; i < l; i++) {
                     // Push only the new entries
                     if (data.rows[i].value.status === "to_prepare") {
-                        if (!checkIfAlreadyExist($scope.orders, data.rows[i])) {
-                            $scope.orders.push(data.rows[i]);
+                        if (!checkIfAlreadyExist(self.orders, data.rows[i])) {
+                            self.orders.push(data.rows[i]);
                         }
                     }
                 }
@@ -51,8 +79,8 @@ barmanServices.factory('Order', [ '$http', function ($http) {
          * @param $scope: The scope which we modify
          * @param order: The order which want to update the status
          */
-        updateOrderStatusToReady: function($scope, order) {
-            var index = $scope.orders.indexOf(order);
+        updateOrderStatusToReady: function(order) {
+            var index = this.orders.indexOf(order);
 
             var promise = $http.put('https://lazywaiter.couchappy.com/orders/' + order._id, order);
             promise.success(function(data, status, headers, config) {
@@ -65,6 +93,16 @@ barmanServices.factory('Order', [ '$http', function ($http) {
                 order.status = "to_prepare";
                 alert("error: Data not updated");
             });
+        },
+        startFetchingEvery: function(time) {
+            /*
+             * Refresh data every @time seconds
+             *
+             */
+            var self = this;
+            $interval(function() {
+                self.fetchOrders();
+            }, time);
         }
     }
 }]);
@@ -80,8 +118,9 @@ barmanServices.factory("ControlTime", [function() {
          */
         getOrderDateUntilNowInMinutes: function(order) {
             var now = new Date().getTime();
-            var orderDate = order.value.createdAt;
-            return Math.floor((now - orderDate)/ 60000)
+            var date = order.value.createdAt;
+
+            return Math.floor((now - date) / 60000);
         },
 
         /*

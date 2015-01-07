@@ -6,17 +6,21 @@ barmanDirectives
             scope: {
                 order: "="
             },
-            controller: ['$scope', '$timeout', 'ControlTime', function($scope, $timeout, ControlTime) {
+            controller: ['$scope', '$timeout', function($scope, $timeout) {
+                var getOrderDateUntilNowInMinutes = function(date) {
+                    var now = new Date().getTime();
 
+                    return Math.floor((now - date) / 60000);
+                };
 
-                $scope.counter = ControlTime.getOrderDateUntilNowInMinutes($scope.order);
+                $scope.counter = getOrderDateUntilNowInMinutes($scope.order.value.createdAt);
                 $scope.pluralize =  ($scope.counter === 1) ? '' : 's';
 
                 /*
                  * The timer
                  */
                 $scope.onTimeout = function() {
-                    $scope.counter = ControlTime.getOrderDateUntilNowInMinutes($scope.order);
+                    $scope.counter = getOrderDateUntilNowInMinutes($scope.order.value.createdAt);
                     $scope.pluralize =  ($scope.counter === 1) ? '' : 's';
                     orderTimeout = $timeout($scope.onTimeout, 60000);
                 };
