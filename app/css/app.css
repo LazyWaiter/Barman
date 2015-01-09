@@ -12,11 +12,11 @@
 
 .content {
   background: #34C924;
+  border-radius: 11px;
   color: #FFFFFF;
-  display: inline-block;
   font-size: 30px;
-  margin: 10px auto 10px auto;
-  padding: 10px;
+  margin: 20px auto 20px auto;
+  box-shadow: 0px 2px 11px #000000;
   width: 95%;
 }
 
@@ -37,19 +37,21 @@
 
 .timer{
   height: inherit;
-  /*line-height: 90px;*/
   width: 15%;
 }
 
+.info-cmd{
+  text-align: center;
+}
+
 button{
-  background: #808080;
-  border: groove #000000;
   border-radius: 10px;
-  float: right;
-  height: inherit;
-  line-height: 80px;
-  margin: 5px 0 5px 0;
-  width: 15%;
+}
+
+.btn-success{
+  font-size: 40px;
+  margin: 10px 0 0 0;
+  width: 100%;
 }
 
 .product{
@@ -63,15 +65,15 @@ button{
 }
 
 .green{
-  background: #008000;
+  background: #64DD17;
 }
 
 .orange{
-  background: orange;
+  background: #FFC107;
 }
 
 .red{
-  background: #ff0000;
+  background: #D50000/*#ff0000*/;
 }
 
 .test{
@@ -79,3 +81,51 @@ button{
   color: white;
   font-size: 26px;
 }
+
+/* Animation *\
+
+
+/* Durée de l'animation */
+.content.ng-enter, .content.ng-leave {
+  transition-duration: 1s; }
+
+/* Au démarage */
+.content.ng-enter {
+  opacity: 0;
+  transform: translateX(120px); }
+
+/* Fin de l'animation d'entrée */
+.content.ng-enter.ng-enter-active {
+  opacity: 1;
+  transform: translateX(0px); }
+
+/* Fin de l'animation de sortie */
+.content.ng-leave.ng-leave-active {
+  opacity: 0;
+  transform: translateX(-120px);
+}
+
+.content.ng-enter-stagger{
+  transition-delay: 0.5s;
+  transition-duration: 0s;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

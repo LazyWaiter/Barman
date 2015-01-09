@@ -66,7 +66,7 @@ barmanServices.factory('Order', [ '$http', '$interval', function ($http, $interv
                 }
             });
             promise.error(function(data, status, headers, config) {
-                alert("error: Data not found");
+                console.log("data not found");
             });
         },
 

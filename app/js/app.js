@@ -3,6 +3,7 @@
 /* App Module */
 
 var barmanApp = angular.module('barmanApp', [
+    'ngAnimate',
     'ngRoute',
     'ui.bootstrap',
     'barmanControllers',
